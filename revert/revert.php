@@ -20,7 +20,6 @@ class Revert
 
             $i = 0;
             foreach ($str as $symbol) {
-                // Concating punctuation with string immediately
                 if (ctype_punct($symbol)) {
                     $reversed = array_reverse($subWord);
                     foreach ($uppercase as $index) {
@@ -32,7 +31,6 @@ class Revert
                     $i = 0;
                     continue;
                 }
-                // Check if uppercase
                 if ($symbol === mb_strtoupper($symbol, 'UTF-8') && !ctype_digit($symbol)) {
                     $uppercase[] = $i;
                 }
