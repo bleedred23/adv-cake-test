@@ -13,10 +13,11 @@ class Revert
         $words = explode(' ', $str);
         $result = '';
 
-        foreach ($words as $word) {
+        foreach ($words as $k => $word) {
             $str = mb_str_split($word, 1, 'UTF-8');
             $uppercase = [];
             $subWord = [];
+
             $i = 0;
             foreach ($str as $symbol) {
                 // Concating punctuation with string immediately
@@ -32,19 +33,20 @@ class Revert
                     continue;
                 }
                 // Check if uppercase
-                if ($symbol === mb_strtoupper($symbol, 'UTF-8')) {
+                if ($symbol === mb_strtoupper($symbol, 'UTF-8') && !ctype_digit($symbol)) {
                     $uppercase[] = $i;
                 }
                 $subWord[] = mb_strtolower($symbol, 'UTF-8');
                 $i++;
             }
-            $result .= ' ';
             if ($i !== 0) {
                 $reversed = array_reverse($subWord);
                 foreach ($uppercase as $index)
                     $reversed[$index] = mb_strtoupper($reversed[$index], "utf-8");
                 $result .= implode($reversed);
             }
+            if ($k !== (count($words) - 1))
+                $result .= ' ';
         }
 
         return $result;
